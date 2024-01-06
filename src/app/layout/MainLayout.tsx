@@ -11,7 +11,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
 
   return (
     <div>
-      <h1>Main Layout</h1>
+      <h1>Main Layout!!</h1>
     </div>
   );
 };
