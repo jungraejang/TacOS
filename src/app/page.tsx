@@ -15,7 +15,7 @@ export default function Home() {
         <meta name="description" content="5 years experiment about yourself" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-sage">
+      <main className="flex min-h-screen flex-col items-center justify-between">
         <MainLayout />
       </main>
     </>

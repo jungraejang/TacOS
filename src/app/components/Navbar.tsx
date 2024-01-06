@@ -18,6 +18,15 @@ const actions = [
 ];
 
 const Navbar: React.FC = () => {
+  function handleClick(e: any, operation: any) {
+    e.preventDefault();
+    console.log("You clicked: ", operation);
+    if (operation == "product") {
+      // do something
+    } else if (operation == "tag") {
+      //do something else
+    }
+  }
   return (
     <SpeedDial
       ariaLabel="SpeedDial basic example"
@@ -27,14 +36,17 @@ const Navbar: React.FC = () => {
         left: 16,
       }}
       direction="up"
-      FabProps={{ size: "medium", style: { backgroundColor: "#F39C6B" } }}
+      FabProps={{ size: "medium", style: { backgroundColor: "#261447" } }}
       icon={<SpeedDialIcon openIcon={<MenuIcon />} />}
     >
       {actions.map((action) => (
         <SpeedDialAction
-          className="bg-folly"
+          className="bg-tangerine"
           key={action.name}
           icon={action.icon}
+          onClick={(e) => {
+            handleClick(e, action.name);
+          }}
           //   tooltipTitle={action.name}
           //   tooltipOpen
           //   tooltipPlacement="right"

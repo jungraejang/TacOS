@@ -11,10 +11,9 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
   console.log("user", user, isLoading);
 
   return (
-    <div>
-      <h1>Main Layout</h1>
-      {!user && <a href="/api/auth/login">Log In</a>}
-      {user && <a href="/api/auth/logout">Log Out</a>}
+    <div className="min-h-screen w-full bg-sage">
+      {/* {!user && <a href="/api/auth/login">Log In</a>}
+      {user && <a href="/api/auth/logout">Log Out</a>} */}
       <Navbar />
     </div>
   );
