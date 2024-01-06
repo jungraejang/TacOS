@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
@@ -18,14 +18,27 @@ const actions = [
 ];
 
 const Navbar: React.FC = () => {
+  const [open, setOpen] = useState(false);
   function handleClick(e: any, operation: any) {
+    setOpen(!open);
     e.preventDefault();
     console.log("You clicked: ", operation);
-    if (operation == "product") {
-      // do something
-    } else if (operation == "tag") {
-      //do something else
-    }
+    // switch (operation) {
+    //   case "Home":
+    //     window.location.href = "/";
+    //     break;
+    //   case "Archive":
+    //     window.location.href = "/archive";
+    //     break;
+    //   case "Search":
+    //     window.location.href = "/search";
+    //     break;
+    //   case "Account":
+    //     window.location.href = "/account";
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
   return (
     <SpeedDial
@@ -38,6 +51,11 @@ const Navbar: React.FC = () => {
       direction="up"
       FabProps={{ size: "medium", style: { backgroundColor: "#261447" } }}
       icon={<SpeedDialIcon openIcon={<MenuIcon />} />}
+      onClick={(e) => {
+        e.preventDefault();
+        setOpen(!open);
+      }}
+      open={open}
     >
       {actions.map((action) => (
         <SpeedDialAction
