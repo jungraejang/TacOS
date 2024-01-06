@@ -1,6 +1,7 @@
 "use client";
 import React, { ReactNode, useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Navbar from "../components/Navbar";
 
 type MainLayoutProps = {};
 
@@ -11,7 +12,10 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
 
   return (
     <div>
-      <h1>Main Layout!!</h1>
+      <h1>Main Layout</h1>
+      {!user && <a href="/api/auth/login">Log In</a>}
+      {user && <a href="/api/auth/logout">Log Out</a>}
+      <Navbar />
     </div>
   );
 };
