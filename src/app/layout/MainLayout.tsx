@@ -2,18 +2,70 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Navbar from "../components/Navbar";
+import { useNavbarContext } from "../context/NavbarContext";
+import { CSSTransition } from "react-transition-group";
+import { AnimatePresence, motion } from "framer-motion";
+import Home from "../components/Home";
+import Archive from "../components/Archive";
+import Search from "../components/Search";
+import Account from "../components/Account";
 
 type MainLayoutProps = {};
 
+const pageVariants = {
+  initial: { opacity: 0, x: "-100vw", scale: 0.8 },
+  in: { opacity: 1, x: 0, scale: 1 },
+  out: { opacity: 0, x: "100vw", scale: 1.2 },
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "anticipate",
+  duration: 0.5,
+};
+
 const MainLayout: React.FC<MainLayoutProps> = () => {
   const { user, error, isLoading } = useUser();
+  const { operation, updateOperation } = useNavbarContext();
+  let Component;
+  switch (operation) {
+    case "Home":
+      Component = Home;
+      break;
+    case "Archive":
+      Component = Archive;
+      break;
+    case "Search":
+      Component = Search;
+      break;
+    case "Account":
+      Component = Account;
+      break;
+    default:
+      Component = Home;
+  }
   //   const [isClient, setIsClient] = useState(false);
-  console.log("user", user, isLoading);
+  console.log("user", user, isLoading, operation);
 
   return (
-    <div className="min-h-screen w-full bg-sage">
+    <div className="min-h-screen w-full">
       {/* {!user && <a href="/api/auth/login">Log In</a>}
       {user && <a href="/api/auth/logout">Log Out</a>} */}
+      <div className="relative">
+        {/* Add more CSSTransitions as needed */}
+        <AnimatePresence>
+          <motion.div
+            key={operation}
+            initial="initial"
+            animate="in"
+            exit="out"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <Component />
+          </motion.div>
+        </AnimatePresence>{" "}
+      </div>
       <Navbar />
     </div>
   );

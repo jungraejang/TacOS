@@ -9,6 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShareIcon from "@mui/icons-material/Share";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavbarContext } from "../context/NavbarContext";
 
 const actions = [
   { icon: <HomeIcon />, name: "Home" },
@@ -19,6 +20,8 @@ const actions = [
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const { operation, updateOperation } = useNavbarContext();
+
   function handleClick(e: any, operation: any) {
     setOpen(!open);
     e.preventDefault();
@@ -39,6 +42,7 @@ const Navbar: React.FC = () => {
     //   default:
     //     break;
     // }
+    updateOperation(operation);
   }
   return (
     <SpeedDial
