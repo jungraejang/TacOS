@@ -7,7 +7,7 @@ const Account: React.FC = () => {
       className="min-h-screen w-full bg-folly"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.2, delay: 0.5 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
     >
       <h1>Account</h1>
       <p>This is the Account page.</p>

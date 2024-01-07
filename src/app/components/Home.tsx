@@ -7,7 +7,7 @@ const Home: React.FC = () => {
       className="min-h-screen w-full bg-tangerine"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.2, delay: 0.5 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
     >
       <h1>Welcome to the Home component!</h1>
     </motion.div>
