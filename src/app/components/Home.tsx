@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import MainDesktop from "./MainDesktop";
 
 const Home: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ const Home: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
     >
-      <h1>Welcome to the Home component!</h1>
+      <MainDesktop />
     </motion.div>
   );
 };

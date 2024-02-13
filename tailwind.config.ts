@@ -19,6 +19,7 @@ const config: Config = {
         tangerine: "#F39C6B",
         folly: "#FF3864",
         russianViolet: "#261447",
+        darkGray: "#36454F",
       },
     },
   },

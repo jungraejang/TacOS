@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
     >
       {actions.map((action) => (
         <SpeedDialAction
-          className="bg-tangerine"
+          className="bg-sage"
           key={action.name}
           icon={action.icon}
           onClick={(e) => {
