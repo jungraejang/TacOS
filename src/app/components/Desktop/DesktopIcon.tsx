@@ -18,7 +18,7 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({
 }) => {
   return (
     <motion.div
-      className="flex flex-col items-center cursor-pointer w-32"
+      className="flex flex-col items-center cursor-pointer"
       whileHover={{ scale: 1.2 }}
       whileTap={{ scale: 0.8 }}
       dragConstraints={desktopRef}
