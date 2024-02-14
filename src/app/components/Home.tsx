@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import MainDesktop from "./MainDesktop";
+import MainDesktop from "./Desktop/MainDesktop";
 
 const Home: React.FC = () => {
   return (

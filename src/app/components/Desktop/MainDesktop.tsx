@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Window from "./Window/Window";
+import Window from "../Window/Window";
 import ComputerIcon from "@mui/icons-material/Computer";
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"; // Recycle
@@ -8,7 +8,7 @@ import EmailIcon from "@mui/icons-material/Email"; // Email
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports"; // Games
 import DesktopIcon from "./DesktopIcon";
 import CalculateIcon from "@mui/icons-material/Calculate";
-import Calculator from "./Calculator";
+import Calculator from "../Calculator";
 
 interface WindowPosition {
   id: number;
