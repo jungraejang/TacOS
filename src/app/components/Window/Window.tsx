@@ -2,6 +2,7 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import CloseIcon from "@mui/icons-material/Close"; // Import Close icon for the button
+import ResizeHandle from "./ResizeHandle";
 
 interface WindowProps {
   id: number;
@@ -12,6 +13,7 @@ interface WindowProps {
   onRemove: (id: number) => void;
   isActive: boolean;
   onClick: () => void;
+  children?: React.ReactNode;
 }
 
 const Window: React.FC<WindowProps> = ({
@@ -23,37 +25,29 @@ const Window: React.FC<WindowProps> = ({
   type,
   isActive,
   onClick,
+  children,
 }) => {
   const [dimensions, setDimensions] = useState({ width: 450, height: 450 });
   const motionRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  console.log(
-    "x and y",
-    x,
-    y,
-    dimensions.width,
-    dimensions.height,
-    isFullscreen
-  );
-
   const titleBarClasses = isActive ? "bg-blue-400" : "bg-gray-300";
-  const windowClasses = isActive ? "z-20" : "z-10";
   const fullscreenStyle = isFullscreen
     ? { x: 0, y: 0, width: window.innerWidth, height: window.innerHeight }
     : {};
 
-  const handleResizeDrag = (event: any, info: any) => {
-    const delta = info.delta;
-    setDimensions((current) => ({
-      width: Math.max(100, current.width + delta.x),
-      height: Math.max(100, current.height + delta.y),
+  const handleResize = (deltaWidth: number, deltaHeight: number) => {
+    setDimensions((currentDimensions) => ({
+      width: Math.max(100, currentDimensions.width + deltaWidth),
+      height: Math.max(100, currentDimensions.height + deltaHeight),
     }));
   };
 
   const handleDoubleClick = () => {
     setIsFullscreen(!isFullscreen);
   };
+
+  console.log("Window render", dimensions.width, dimensions.height);
 
   return (
     <motion.div
@@ -73,7 +67,7 @@ const Window: React.FC<WindowProps> = ({
         bottom: window.innerHeight - dimensions.height,
         left: 0,
       }}
-      dragElastic={0}
+      dragElastic={0.2}
       dragMomentum={false}
       ref={motionRef}
       style={{
@@ -88,7 +82,7 @@ const Window: React.FC<WindowProps> = ({
     >
       <div
         className={`flex items-center justify-between p-2 ${titleBarClasses}`}
-        onDoubleClick={handleDoubleClick} // Attach the double click event here
+        onDoubleClick={handleDoubleClick}
       >
         <span className="text-sm font-medium text-white">
           {type || "Window"}
@@ -105,28 +99,20 @@ const Window: React.FC<WindowProps> = ({
       </div>
 
       {/* Window Content -- Adjust as needed */}
-      <div className="p-4">
-        <p>This is a window content.</p>
+      <div
+        className="p-4 text-black w-full"
+        style={{
+          height: isFullscreen
+            ? window.innerHeight - 50
+            : `${dimensions.height - 50}px`,
+        }}
+      >
+        {children}
       </div>
 
-      {/* Resize Handle */}
-      <div className="absolute bottom-4 right-4">
-        <motion.div
-          className="cursor-se-resize w-4 h-4 bg-gray-300"
-          dragMomentum={false}
-          drag
-          dragConstraints={{
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          }}
-          dragElastic={0}
-          style={{
-            position: "absolute",
-          }}
-          onDrag={(event, info) => handleResizeDrag(event, info)}
-        />
+      {/* Resize Handle: only shown when not in full screen mode */}
+      <div className="absolute bottom-1 right-1">
+        {!isFullscreen ? <ResizeHandle onResize={handleResize} /> : null}
       </div>
     </motion.div>
   );

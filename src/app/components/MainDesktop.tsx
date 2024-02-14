@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Window from "./Window";
+import Window from "./Window/Window";
 import ComputerIcon from "@mui/icons-material/Computer";
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"; // Recycle
@@ -7,11 +7,20 @@ import LanguageIcon from "@mui/icons-material/Language"; // Internet
 import EmailIcon from "@mui/icons-material/Email"; // Email
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports"; // Games
 import DesktopIcon from "./DesktopIcon";
+import CalculateIcon from "@mui/icons-material/Calculate";
+import Calculator from "./Calculator";
+
+interface WindowPosition {
+  id: number;
+  x: number;
+  y: number;
+  type?: string;
+  content?: React.ReactNode; // Add this line
+}
 
 const MainDesktop = () => {
-  const [positions, setPositions] = useState<
-    Array<{ id: number; x: number; y: number; type?: string }>
-  >([]);
+  const [positions, setPositions] = useState<Array<WindowPosition>>([]);
+
   const [activeId, setActiveId] = useState<number | null>(null);
   const [contextMenu, setContextMenu] = useState<{
     visible: boolean;
@@ -35,14 +44,18 @@ const MainDesktop = () => {
   };
 
   const handleDrag = (id: number, event: any, info: any) => {
-    const squareBeingDragged = positions.find((pos) => pos.id === id);
-    const newPosition = {
-      id,
-      x: info.point.x,
-      y: info.point.y,
-      type: squareBeingDragged?.type,
-    };
-    setPositions(positions.map((pos) => (pos.id === id ? newPosition : pos)));
+    setPositions(
+      positions.map((pos) => {
+        if (pos.id === id) {
+          return {
+            ...pos, // Spread existing properties to retain them, including `content`
+            x: info.point.x, // Update position
+            y: info.point.y,
+          };
+        }
+        return pos;
+      })
+    );
   };
 
   const handleContextMenu = (event: React.MouseEvent) => {
@@ -65,19 +78,28 @@ const MainDesktop = () => {
   };
 
   const addSquare = (type: string) => {
+    let newPosition: WindowPosition;
+
     const rowCount = Math.floor(window.innerWidth / OFFSET_X);
     const currentCount = positions.length;
     const newX = BASE_X + (currentCount % rowCount) * OFFSET_X;
     const newY = BASE_Y + Math.floor(currentCount / rowCount) * OFFSET_Y;
     const newId = idCounter.current++; // Generate the new ID beforehand
 
-    const newPosition = {
-      id: newId,
-      x: newX,
-      y: newY,
-      type: type,
-    };
-
+    // setPositions([...positions, newPosition]);
+    if (type === "Calculator") {
+      // For Calculator, add additional properties or a way to identify it needs to render the Calculator component
+      newPosition = {
+        id: newId,
+        x: newX,
+        y: newY,
+        type: type,
+        content: <Calculator />, // This could be how you specify the component to render
+      };
+    } else {
+      // Existing logic for other types...
+      newPosition = { id: newId, x: newX, y: newY, type: type };
+    }
     setPositions([...positions, newPosition]);
     setActiveId(newId); // Set the new window as active
   };
@@ -105,8 +127,9 @@ const MainDesktop = () => {
           onRemove={removeSquare}
           type={pos.type}
           isActive={pos.id === activeId}
-          // onDoubleClick={() => handleFullScreen(pos.id)} // Passing the method here
-        />
+        >
+          {pos.content} {/* Render specific content if any */}
+        </Window>
       ))}
       {contextMenu.visible && (
         <div
@@ -173,6 +196,12 @@ const MainDesktop = () => {
           label="Games"
           desktopRef={desktopRef}
           onDoubleClick={() => addSquare("Games")}
+        />
+        <DesktopIcon
+          Icon={CalculateIcon}
+          label="Calculator"
+          desktopRef={desktopRef}
+          onDoubleClick={() => addSquare("Calculator")}
         />
       </div>{" "}
     </div>
