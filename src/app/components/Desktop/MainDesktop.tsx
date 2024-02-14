@@ -9,7 +9,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports"; // Games
 import DesktopIcon from "./DesktopIcon";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import Calculator from "../Calculator";
-
+import About from "../About";
 interface WindowPosition {
   id: number;
   x: number;
@@ -102,7 +102,7 @@ const MainDesktop = () => {
         x: newX,
         y: newY,
         type: type,
-        content: "TacOS - Created By JRJ", // This could be how you specify the component to render
+        content: <About />, // This could be how you specify the component to render
       };
     } else {
       // Existing logic for other types...
