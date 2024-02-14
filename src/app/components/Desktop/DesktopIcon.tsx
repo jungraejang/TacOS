@@ -26,7 +26,7 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({
       dragMomentum={false} // Ensures no sliding effect after drag
       onDoubleClick={onDoubleClick}
     >
-      <Icon className="text-5xl text-cyan-950 hover:text-gray-900" />
+      <Icon className="text-cyan-950 hover:text-gray-900" fontSize="large" />
       <span className="text-sm font-bold mt-1 text-cyan-950">{label}</span>
     </motion.div>
   );
