@@ -96,6 +96,14 @@ const MainDesktop = () => {
         type: type,
         content: <Calculator />, // This could be how you specify the component to render
       };
+    } else if (type === "About") {
+      newPosition = {
+        id: newId,
+        x: newX,
+        y: newY,
+        type: type,
+        content: "TacOS - Created By JRJ", // This could be how you specify the component to render
+      };
     } else {
       // Existing logic for other types...
       newPosition = { id: newId, x: newX, y: newY, type: type };
@@ -152,7 +160,10 @@ const MainDesktop = () => {
             <li className="px-4 py-2 text-black hover:bg-gray-300 cursor-pointer">
               Other Settings
             </li>
-            <li className="px-4 py-2 text-black hover:bg-gray-300 cursor-pointer">
+            <li
+              className="px-4 py-2 text-black hover:bg-gray-300 cursor-pointer"
+              onClick={() => addSquare("About")}
+            >
               About
             </li>
           </ul>

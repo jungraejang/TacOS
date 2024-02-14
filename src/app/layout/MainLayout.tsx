@@ -45,7 +45,6 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
       Component = Home;
   }
   //   const [isClient, setIsClient] = useState(false);
-  console.log("user", user, isLoading, operation);
 
   return (
     <div className="min-h-screen w-full bg-darkGray">
