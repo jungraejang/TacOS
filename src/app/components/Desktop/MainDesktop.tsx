@@ -5,6 +5,7 @@ import ContextMenu from "../common/ContextMenu"; // Adjust the import path if ne
 import { MenuItem, desktopIcons } from "@/app/types/desktop.type";
 import { useSquares } from "../../hooks/useSquares"; // Adjust the import path if necessary
 import useContextMenu from "@/app/hooks/useContextMenu";
+import { useDisplaySettings } from "@/app/context/DisplaySettingContext";
 
 const MainDesktop = () => {
   const {
@@ -17,6 +18,9 @@ const MainDesktop = () => {
   } = useSquares();
 
   const { contextMenu, showContextMenu, hideContextMenu } = useContextMenu();
+  const { fontSize, windowColor, theme } = useDisplaySettings();
+
+  console.log(fontSize, windowColor, theme);
 
   const desktopRef = useRef<HTMLDivElement>(null);
   const [resetKey, setResetKey] = useState(0);
@@ -29,7 +33,7 @@ const MainDesktop = () => {
   const menuItems: MenuItem[] = [
     {
       label: "Display Setting",
-      action: () => console.log("Display Setting clicked"),
+      action: () => addSquare("DisplaySetting"), // Assuming 'DisplaySetting' is handled within `addSquare`
     },
     {
       label: "Reset Icons",
@@ -60,7 +64,6 @@ const MainDesktop = () => {
           x={pos.x}
           y={pos.y}
           onDrag={(event, info) => {
-            console.log(info); // Check the structure of info
             if (info && info.point) {
               handleDrag(pos.id, info.point.x, info.point.y);
             }

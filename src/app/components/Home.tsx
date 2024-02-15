@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import MainDesktop from "./Desktop/MainDesktop";
+import { DisplaySettingProvider } from "../context/DisplaySettingContext";
 
 const Home: React.FC = () => {
   return (
@@ -17,7 +18,9 @@ const Home: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
     >
-      <MainDesktop />
+      <DisplaySettingProvider>
+        <MainDesktop />
+      </DisplaySettingProvider>
     </motion.div>
   );
 };

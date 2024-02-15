@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import CloseIcon from "@mui/icons-material/Close"; // Import Close icon for the button
 import ResizeHandle from "./ResizeHandle";
+import { useDisplaySettings } from "@/app/context/DisplaySettingContext";
 
 interface WindowProps {
   id: number;
@@ -30,8 +31,9 @@ const Window: React.FC<WindowProps> = ({
   const [dimensions, setDimensions] = useState({ width: 450, height: 450 });
   const motionRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const { fontSize, windowColor, theme } = useDisplaySettings();
 
-  const titleBarClasses = isActive ? "bg-blue-400" : "bg-gray-300";
+  const titleBarClasses = isActive ? windowColor : "#D1D5DB";
   const fullscreenStyle = isFullscreen
     ? { x: 0, y: 0, width: window.innerWidth, height: window.innerHeight }
     : {};
@@ -47,7 +49,23 @@ const Window: React.FC<WindowProps> = ({
     setIsFullscreen(!isFullscreen);
   };
 
-  console.log("Window render", dimensions.width, dimensions.height);
+  let fontSizeValue = "text-md";
+
+  switch (fontSize) {
+    case "small":
+      fontSizeValue = "text-sm";
+      break;
+    case "medium":
+      fontSizeValue = "text-md";
+      break;
+    case "large":
+      fontSizeValue = "text-lg";
+      break;
+    default:
+      console.log("Default font size");
+  }
+
+  console.log("Window render", dimensions.width, dimensions.height, x, y);
 
   return (
     <motion.div
@@ -81,10 +99,11 @@ const Window: React.FC<WindowProps> = ({
       onTap={onClick}
     >
       <div
-        className={`flex items-center justify-between p-2 ${titleBarClasses}`}
+        className={`flex items-center justify-between p-2`}
+        style={{ backgroundColor: titleBarClasses }}
         onDoubleClick={handleDoubleClick}
       >
-        <span className="text-sm font-medium text-white">
+        <span className={`text-md text-white ${fontSizeValue}`}>
           {type || "Window"}
         </span>
         <button

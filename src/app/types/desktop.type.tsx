@@ -8,6 +8,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports"; // Games
 import CalculateIcon from "@mui/icons-material/Calculate";
 import Calculator from "../components/Calculator";
 import About from "../components/About";
+import DisplayPanel from "../components/DisplaySetting/DisplaySettingPanel";
 
 export interface MenuItem {
   label: string;
@@ -42,5 +43,6 @@ export const desktopIcons: IconType[] = [
 export const desktopApps: Record<string, React.ReactNode> = {
   Calculator: <Calculator />,
   About: <About />,
+  DisplaySetting: <DisplayPanel />,
   // Add other types and their corresponding components here
 };
