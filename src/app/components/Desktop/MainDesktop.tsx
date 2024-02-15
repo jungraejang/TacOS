@@ -1,39 +1,51 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Window from "../Window/Window";
 import DesktopIcon from "./DesktopIcon";
-import ContextMenu from "../common/ContextMenu"; // Import the ContextMenu component
-import {
-  MenuItem,
-  WindowPosition,
-  desktopApps,
-  desktopIcons,
-} from "@/app/types/desktop.type";
+import ContextMenu from "../common/ContextMenu"; // Adjust the import path if necessary
+import { MenuItem, desktopIcons } from "@/app/types/desktop.type";
+import { useSquares } from "../../hooks/useSquares"; // Adjust the import path if necessary
 
 const MainDesktop = () => {
-  const [positions, setPositions] = useState<Array<WindowPosition>>([]);
-
-  const [activeId, setActiveId] = useState<number | null>(null);
+  const {
+    positions,
+    activeId,
+    addSquare,
+    removeSquare,
+    handleDrag,
+    handleSquareClick,
+  } = useSquares();
   const [contextMenu, setContextMenu] = useState<{
     visible: boolean;
     x: number;
     y: number;
   }>({ visible: false, x: 0, y: 0 });
+  const desktopRef = useRef<HTMLDivElement>(null);
   const [resetKey, setResetKey] = useState(0);
-
-  const desktopRef = useRef(null); // Create a ref for the desktop area
-
-  const idCounter = useRef(0);
-
-  // Adjust these values as needed
-  const BASE_X = window.innerWidth / 2 - 50;
-  const BASE_Y = window.innerHeight / 2 - 50;
-  const OFFSET_X = 110; // Square width + gap
-  const OFFSET_Y = 110; // Square height + gap
+  console.log("Rendering MainDesktop", resetKey);
 
   const resetIcons = () => {
+    console.log("Resetting icons");
     setResetKey((prevKey) => prevKey + 1); // Increment key to force re-render
   };
 
+  const handleContextMenu = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    setContextMenu({
+      visible: true,
+      x: event.clientX,
+      y: event.clientY,
+    });
+  };
+
+  const handleClick = () => {
+    if (contextMenu.visible) {
+      setContextMenu({ ...contextMenu, visible: false });
+    }
+  };
+
+  // Prepare menu items for the context menu
   const menuItems: MenuItem[] = [
     {
       label: "Display Setting",
@@ -49,69 +61,9 @@ const MainDesktop = () => {
     },
     {
       label: "About",
-      action: () => addSquare("About"),
+      action: () => addSquare("About"), // Assuming 'About' is handled within `addSquare`
     },
   ];
-
-  const handleDrag = (id: number, event: any, info: any) => {
-    setPositions(
-      positions.map((pos) => {
-        if (pos.id === id) {
-          return {
-            ...pos, // Spread existing properties to retain them, including `content`
-            x: info.point.x, // Update position
-            y: info.point.y,
-          };
-        }
-        return pos;
-      })
-    );
-  };
-
-  const handleContextMenu = (event: React.MouseEvent) => {
-    event.preventDefault();
-    setContextMenu({
-      visible: true,
-      x: event.clientX,
-      y: event.clientY,
-    });
-  };
-
-  const handleSquareClick = (id: number) => {
-    setActiveId(id);
-  };
-
-  const handleClick = () => {
-    if (contextMenu.visible) {
-      setContextMenu({ ...contextMenu, visible: false });
-    }
-  };
-
-  const addSquare = (type: string) => {
-    const newId = idCounter.current++;
-    const currentCount = positions.length;
-    const rowCount = Math.floor(window.innerWidth / OFFSET_X);
-    const newX = BASE_X + (currentCount % rowCount) * OFFSET_X;
-    const newY = BASE_Y + Math.floor(currentCount / rowCount) * OFFSET_Y;
-
-    // Determine the content based on the type
-    const content = desktopApps[type] || null;
-
-    const newPosition: WindowPosition = {
-      id: newId,
-      x: newX,
-      y: newY,
-      type,
-      content,
-    };
-
-    setPositions([...positions, newPosition]);
-    setActiveId(newId); // Optionally set the new window as active
-  };
-
-  const removeSquare = (id: number) => {
-    setPositions(positions.filter((pos) => pos.id !== id));
-  };
 
   return (
     <div
@@ -127,13 +79,18 @@ const MainDesktop = () => {
           id={pos.id}
           x={pos.x}
           y={pos.y}
-          onClick={() => handleSquareClick(pos.id)}
-          onDrag={handleDrag}
-          onRemove={removeSquare}
+          onDrag={(event, info) => {
+            console.log(info); // Check the structure of info
+            if (info && info.point) {
+              handleDrag(pos.id, info.point.x, info.point.y);
+            }
+          }}
+          onRemove={() => removeSquare(pos.id)}
           type={pos.type}
           isActive={pos.id === activeId}
+          onClick={() => handleSquareClick(pos.id)}
         >
-          {pos.content} {/* Render specific content if any */}
+          {pos.content}
         </Window>
       ))}
       {contextMenu.visible && (
@@ -148,10 +105,10 @@ const MainDesktop = () => {
         {desktopIcons.map(({ Icon, label, type }) => (
           <DesktopIcon
             key={type}
-            desktopRef={desktopRef}
             Icon={Icon}
             label={label}
             onDoubleClick={() => addSquare(type)}
+            desktopRef={desktopRef}
           />
         ))}
       </div>

@@ -2,7 +2,7 @@
 import { useState, useRef, useCallback } from "react";
 import { WindowPosition, desktopApps } from "@/app/types/desktop.type";
 
-const useSquares = () => {
+export const useSquares = () => {
   const [positions, setPositions] = useState<Array<WindowPosition>>([]);
   const [activeId, setActiveId] = useState<number | null>(null);
   const idCounter = useRef(0);
@@ -46,5 +46,16 @@ const useSquares = () => {
     );
   }, []);
 
-  return { positions, activeId, addSquare, removeSquare, handleDrag };
+  const handleSquareClick = (id: number) => {
+    setActiveId(id);
+  };
+
+  return {
+    positions,
+    activeId,
+    addSquare,
+    removeSquare,
+    handleDrag,
+    handleSquareClick,
+  };
 };
