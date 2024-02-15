@@ -31,7 +31,7 @@ export const useSquares = () => {
       setPositions((prev) => [...prev, newPosition]);
       setActiveId(newId);
     },
-    [positions]
+    [BASE_X, BASE_Y, positions.length]
   );
 
   const removeSquare = useCallback((id: number) => {

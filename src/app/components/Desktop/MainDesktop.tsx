@@ -4,6 +4,7 @@ import DesktopIcon from "./DesktopIcon";
 import ContextMenu from "../common/ContextMenu"; // Adjust the import path if necessary
 import { MenuItem, desktopIcons } from "@/app/types/desktop.type";
 import { useSquares } from "../../hooks/useSquares"; // Adjust the import path if necessary
+import useContextMenu from "@/app/hooks/useContextMenu";
 
 const MainDesktop = () => {
   const {
@@ -14,35 +15,14 @@ const MainDesktop = () => {
     handleDrag,
     handleSquareClick,
   } = useSquares();
-  const [contextMenu, setContextMenu] = useState<{
-    visible: boolean;
-    x: number;
-    y: number;
-  }>({ visible: false, x: 0, y: 0 });
+
+  const { contextMenu, showContextMenu, hideContextMenu } = useContextMenu();
+
   const desktopRef = useRef<HTMLDivElement>(null);
   const [resetKey, setResetKey] = useState(0);
-  console.log("Rendering MainDesktop", resetKey);
 
   const resetIcons = () => {
-    console.log("Resetting icons");
     setResetKey((prevKey) => prevKey + 1); // Increment key to force re-render
-  };
-
-  const handleContextMenu = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    setContextMenu({
-      visible: true,
-      x: event.clientX,
-      y: event.clientY,
-    });
-  };
-
-  const handleClick = () => {
-    if (contextMenu.visible) {
-      setContextMenu({ ...contextMenu, visible: false });
-    }
   };
 
   // Prepare menu items for the context menu
@@ -69,8 +49,8 @@ const MainDesktop = () => {
     <div
       className="w-full h-screen relative"
       style={{ touchAction: "none" }}
-      onContextMenu={handleContextMenu}
-      onClick={handleClick}
+      onContextMenu={showContextMenu}
+      onClick={hideContextMenu}
       ref={desktopRef}
     >
       {positions.map((pos) => (
