@@ -1,4 +1,3 @@
-// hooks/useSquares.ts
 import { useState, useRef, useCallback } from "react";
 import { WindowPosition, desktopApps } from "@/app/types/desktop.type";
 
@@ -7,11 +6,10 @@ export const useSquares = () => {
   const [activeId, setActiveId] = useState<number | null>(null);
   const idCounter = useRef(0);
 
-  const BASE_X = 50; // Assuming these are your base positions and offsets
-  const BASE_Y = 50;
-  const OFFSET_X = 110;
-  const OFFSET_Y = 110;
-
+  const BASE_X = window.innerWidth / 2 - 250;
+  const BASE_Y = window.innerHeight / 2 - 250;
+  const OFFSET_X = 110; // Square width + gap
+  const OFFSET_Y = 110; // Square height + gap
   const addSquare = useCallback(
     (type: string) => {
       const newId = idCounter.current++;
