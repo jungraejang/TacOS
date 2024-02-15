@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import Window from "../Window/Window";
 import DesktopIcon from "./DesktopIcon";
-import ContextMenu from "./DesktopContextMenu"; // Import the ContextMenu component
+import ContextMenu from "../ContextMenu"; // Import the ContextMenu component
 import {
-  IconType,
+  MenuItem,
   WindowPosition,
   desktopApps,
   desktopIcons,
@@ -33,6 +33,25 @@ const MainDesktop = () => {
   const resetIcons = () => {
     setResetKey((prevKey) => prevKey + 1); // Increment key to force re-render
   };
+
+  const menuItems: MenuItem[] = [
+    {
+      label: "Display Setting",
+      action: () => console.log("Display Setting clicked"),
+    },
+    {
+      label: "Reset Icons",
+      action: resetIcons,
+    },
+    {
+      label: "Other Settings",
+      action: () => console.log("Other Settings clicked"),
+    },
+    {
+      label: "About",
+      action: () => addSquare("About"),
+    },
+  ];
 
   const handleDrag = (id: number, event: any, info: any) => {
     setPositions(
@@ -122,8 +141,7 @@ const MainDesktop = () => {
           visible={contextMenu.visible}
           x={contextMenu.x}
           y={contextMenu.y}
-          onResetIcons={resetIcons}
-          onAddSquare={addSquare}
+          menuItems={menuItems}
         />
       )}
       <div className="absolute left-5 top-5 space-y-8" key={resetKey}>
