@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import Window from "../Window/Window";
 import DesktopIcon from "./DesktopIcon";
-import ContextMenu from "../ContextMenu"; // Import the ContextMenu component
+import ContextMenu from "../common/ContextMenu"; // Import the ContextMenu component
 import {
   MenuItem,
   WindowPosition,
   desktopApps,
   desktopIcons,
-} from "@/app/types/desktop_type";
+} from "@/app/types/desktop.type";
 
 const MainDesktop = () => {
   const [positions, setPositions] = useState<Array<WindowPosition>>([]);

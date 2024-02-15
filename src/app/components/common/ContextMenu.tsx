@@ -1,7 +1,5 @@
 import React from "react";
-
-// Assuming MenuItem is already defined in "@/app/types/desktop_type"
-import { MenuItem } from "@/app/types/desktop_type";
+import { MenuItem } from "@/app/types/desktop.type";
 
 interface ContextMenuProps {
   visible: boolean;
