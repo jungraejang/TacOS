@@ -9,7 +9,8 @@ import CalculateIcon from "@mui/icons-material/Calculate";
 import Calculator from "../components/Calculator";
 import About from "../components/About";
 import DisplayPanel from "../components/DisplaySetting/DisplaySettingPanel";
-
+import ISSTracker from "../components/ISSTracker";
+import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
 export interface MenuItem {
   label: string;
   action: () => void;
@@ -38,11 +39,13 @@ export const desktopIcons: IconType[] = [
   { Icon: EmailIcon, label: "Email", type: "Email" },
   { Icon: SportsEsportsIcon, label: "Games", type: "Games" },
   { Icon: CalculateIcon, label: "Calculator", type: "Calculator" },
+  { Icon: SatelliteAltIcon, label: "ISS Tracker", type: "ISSTracker" },
 ];
 // list for apps
 export const desktopApps: Record<string, React.ReactNode> = {
   Calculator: <Calculator />,
   About: <About />,
   DisplaySetting: <DisplayPanel />,
+  ISSTracker: <ISSTracker />,
   // Add other types and their corresponding components here
 };

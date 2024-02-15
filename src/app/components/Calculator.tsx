@@ -64,41 +64,41 @@ const Calculator = () => {
           )
         )}
       </div>
-      <div className="flex justify-between mb-4 w-full">
+      <div className="flex justify-between mb-4">
         <button
-          className="flex items-center justify-center bg-green-500 text-white p-2 rounded shadow w-full mr-2"
+          className="flex items-center justify-center bg-green-500 text-white p-2 rounded shadow w-16 mr-2"
           onClick={() => setOperation("+")}
         >
           <AddIcon />
         </button>
         <button
-          className="flex items-center justify-center bg-red-500 text-white p-2 rounded shadow w-full mx-2"
+          className="flex items-center justify-center bg-red-500 text-white p-2 rounded shadow w-16 mx-2"
           onClick={() => setOperation("-")}
         >
           <RemoveIcon />
         </button>
         <button
-          className="flex items-center justify-center bg-yellow-500 text-white p-2 rounded shadow w-full mx-2"
+          className="flex items-center justify-center bg-yellow-500 text-white p-2 rounded shadow w-16 mx-2"
           onClick={() => setOperation("*")}
         >
           <MultiplyIcon />
         </button>
         <button
-          className="flex items-center justify-center bg-purple-500 text-white p-2 rounded shadow w-full ml-2"
+          className="flex items-center justify-center bg-purple-500 text-white p-2 rounded shadow w-16 ml-2"
           onClick={() => setOperation("/")}
         >
           <DivideIcon />
         </button>
       </div>
-      <div className="flex w-full">
+      <div className="flex ">
         <button
-          className="flex items-center justify-center bg-orange-500 text-white p-2 rounded shadow w-full mr-2"
+          className="flex items-center justify-center bg-orange-500 text-white p-2 rounded shadow w-32 mr-2"
           onClick={calculate}
         >
           <CalculateIcon />
         </button>
         <button
-          className="flex items-center justify-center bg-gray-500 text-white p-2 rounded shadow w-full ml-2"
+          className="flex items-center justify-center bg-gray-500 text-white p-2 rounded shadow w-32 ml-2"
           onClick={clear}
         >
           <ClearIcon />
